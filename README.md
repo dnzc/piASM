@@ -13,7 +13,7 @@ Whitespace is not part of syntax and a hashtag anywhere in a line marks the whol
 
 # piASM Instructions
 
-format:
+Format:
 ```
 <instruction + usage>
 <mnemonic>

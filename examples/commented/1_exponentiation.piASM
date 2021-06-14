@@ -1,0 +1,51 @@
+# inputs two numbers a and b, and outputs a to the power of b.
+# b must be nonnegative.
+
+# num1, num2, index, result
+0, 0, 0, 1
+
+# input two numbers
+i i
+
+# store the numbers (i.e. transfer from stack to MEM)
+p1 s
+p0 s
+
+
+
+# start for loop
+P69
+
+
+# add 1 to index
+p2 g
+p1 a
+p2 s
+
+# if index >= num2: break
+# in other words, if (index < num2) XOR 1 == 1 then break
+p1 g
+p2 g
+L
+p1 X
+# if 1 then jump to P420
+p420 J
+
+# multiply result by num1
+p3 g
+p0 g
+m
+p3 s
+
+# go back to start of for loop i.e. jump to P69
+p1 p69 J
+
+# end for loop
+P420
+
+
+
+# output result
+p3
+g
+o
