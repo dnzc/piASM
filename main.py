@@ -24,11 +24,6 @@ def run(program, memory_string):
 			b = stack.pop(0)
 			if a == 1:
 				curins = pointers[b]
-		elif char == 'J':
-			a = stack.pop(0)
-			b = stack.pop(0)
-			if b == 1:
-				curins = pointers[a]
 		elif char == 'p':
 			stack.insert(0, int(ins[1:]))
 		elif char == 'g':
@@ -41,44 +36,44 @@ def run(program, memory_string):
 		elif char == 'i':
 			stack.insert(0, int(input()))
 		elif char == 'o':
-			print(stack.pop(0))
+			print(stack.pop(0), end=' ')
 		elif char == 'I':
 			inp = input()
 			for i in inp:
 				stack.insert(0, ord(i))
 			stack.insert(0, len(inp))
 		elif char == 'O':
-			print(chr(stack.pop(0)))
+			print(chr(stack.pop(0)), end='')
 		# logic
-		elif char == 'E':
+		elif char == 'e':
 			a = stack.pop(0)
 			stack.insert(0, int(a==0))
-		elif char == 'L':
+		elif char == 'l':
 			a = stack.pop(0)
 			b = stack.pop(0)
 			stack.insert(0, a<b)
-		elif char == 'A':
+		elif char == 'a':
 			a = stack.pop(0)
 			b = stack.pop(0)
 			stack.insert(0, a&b)
-		elif char == 'X':
+		elif char == 'x':
 			a = stack.pop(0)
 			b = stack.pop(0)
 			stack.insert(0, a^b)
 		# maths
-		elif char == 'a':
+		elif char == 'A':
 			a = stack.pop(0)
 			b = stack.pop(0)
 			stack.insert(0, a+b)
-		elif char == 's':
+		elif char == 'S':
 			a = stack.pop(0)
 			b = stack.pop(0)
 			stack.insert(0, a-b)
-		elif char == 'm':
+		elif char == 'M':
 			a = stack.pop(0)
 			b = stack.pop(0)
 			stack.insert(0, a*b)
-		elif char == 'd':
+		elif char == 'D':
 			a = stack.pop(0)
 			b = stack.pop(0)
 			stack.insert(0, a//b)
@@ -88,7 +83,7 @@ def run(program, memory_string):
 
 		curins += 1
 	
-	print('Program executed successfully')
+	print('\nProgram executed successfully')
 
 #################################
 
@@ -96,7 +91,7 @@ import re
 
 ##### get file to run
 
-filenames = ['examples/0_add.piASM', 'examples/1_exponentiation.piASM']
+filenames = ['examples/0_add', 'examples/1_helloworld', 'examples/2_exponentiation', 'examples/3_choose']
 
 print('Input a number to choose which file to run:')
 for i,val in enumerate(filenames):
@@ -105,7 +100,7 @@ filename = filenames[int(input())]
 
 ##### parse file
 
-raw = open(filename, 'r').read().split('\n')
+raw = open(filename + '.piASM', 'r').read().split('\n')
 # remove comments + blank lines
 parsed = [i for i in raw if '#' not in i and i != '']
 # extract memory string

@@ -1,4 +1,14 @@
 # inputs two numbers a and b, and outputs a+b.
+# purpose: demonstrates basic syntax
 
+# memory is irrelevant for this program
 0
-iiao
+
+# input two numbers, which are pushed to the stack
+i i
+
+# add them (i.e. pop two values from the stack then push the result)
+A
+
+# output (i.e. pop from the stack then output the popped value)
+o

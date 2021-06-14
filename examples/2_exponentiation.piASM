@@ -1,0 +1,51 @@
+# inputs two numbers a and b, and outputs a to the power of b (b must be nonnegative).
+# purpose: demonstrates loops
+
+# num1, num2, index, result
+0, 0, 0, 1
+
+# input two numbers
+i i
+
+# store the numbers (i.e. transfer from stack to MEM)
+p1 s
+p0 s
+
+
+
+# the way loops work: we make use of pointers, so at the end of a single run of a loop we decide whether to exit out or to jump back to the loop start.
+# the loop contents have been indented for readability but remember whitespace is not part of syntax.
+
+# start for loop
+P69
+
+    # add 1 to index
+    p2 g
+    p1 A
+    p2 s
+
+    # if index > num2: break
+    # in other words, if num2 < index, then jump out of the loop
+    p420
+    p2 g
+    p1 g
+    l
+    # if 1 then jump to P420
+    j
+
+    # multiply result by num1
+    p3 g
+    p0 g
+    M
+    p3 s
+
+    # go back to start of for loop i.e. jump to P69
+    p69 p1 j
+
+# end for loop
+P420
+
+
+
+# output result
+p3 g o

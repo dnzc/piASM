@@ -1,0 +1,93 @@
+# inputs two numbers a and b, and outputs a choose b.
+# purpose: demonstrates functions
+
+# funcindex, funcres, funcinp1, funcinp2, num1, num2, firstpartres, secondpartres
+0, 0, 0, 0, 0, 0, 0, 0
+# the first 4 are used by our function, which calculates funcinp1*(funcinp1 - 1)*(...)*(funcinp1 - funcinp2 + 1)
+# num1, num2 are the original user input nums
+# firstpartres is where num1*(num1 - 1)*(...)*(num1 - num2 + 1) is stored
+# secondpartres is where num2! is stored
+
+# the way functions work: we push a return pointer to the stack and set the needed arguments i.e. funcinp1 and funcinp2
+# then we jump to the function pointer, so the function is run, doing stuff with the function variables
+# then at the end of the function we jump back to the return pointer
+
+# push return pointer (so when function finished, will jump to P3)
+p3
+
+# store two inputs in num1, num2
+i p4 s
+i p5 s
+
+# initialize function arguments i.e. funcinp1 and funcinp2
+p4 g p2 s
+p5 g p3 s
+
+# specify our function
+P69
+    # set funcindex to 0 and funcres to 1
+    p0 p0 s
+    p1 p1 s
+
+    # begin loop
+    P1
+
+        # pseudocode for the loop:
+        #   if funcindex >= funcinp2:
+        #       break
+        #   else:
+        #       funcres *= (funcinp1-funcindex)
+        #       funcindex += 1
+        #       go back to loop start
+
+        # push pointer
+        p2
+
+        # compute funcindex >= funcinp2, in other words (funcindex < funcinp2) XOR 1
+        p3 g p0 g l p1 x
+
+        # if it equals 1, break
+        j
+
+        # otherwise
+        # funcres = (funcinp1 - funcindex) * funcres
+        p0 g p2 g S
+        p1 g M
+        p1 s
+        # funcindex += 1
+        p0 g p1 A p0 s
+        # jump to loop start
+        p1 p1 j
+
+    # end loop
+    P2
+
+    # pop pointer from stack and jump to it
+    p1 j
+
+# jump here after function call
+P3
+
+# store funcres in firstpartres
+p1 g p6 s
+
+# second function call
+#f(a, b) = a*(a-1)*(...)*(a-b+1) so to calculate num2! we call f(num2,num2)
+# initialize arguments
+p5 g p2 s
+p5 g p3 s
+
+# push return pointer so function will jump to P4 after execution
+p4
+
+# jump to function
+p69 p1 j
+
+# jump here after function call
+P4
+
+# store funcres in secondpartres
+p1 g p7 s
+
+# output firstpartres / secondpartres
+p7 g p6 g D o

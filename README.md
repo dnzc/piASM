@@ -25,19 +25,13 @@ Format:
 ```
 P <pointer>
 pointer
-specify a unique reference number ("pointer") to this point in execution
+specify a *unique* reference number ("pointer") to this point in execution
 ```
 
 ```
 j <pointer>
 jump
 pop two values (a then b) from stack. If a is 1, jump to pointer b and continue execution
-```
-
-```
-J <pointer>
-jump
-pop two values (a then b) from stack. If b is 1, jump to pointer a and continue execution
 ```
 
 ```
@@ -89,25 +83,25 @@ pop a value from stack, convert from ascii code, send to stdout as a character
 ## Logic
 
 ```
-E
+e
 equals zero
 pop a value from stack, push (value==0) to stack as a 1 or 0
 ```
 
 ```
-L
+l
 less than
 pop two values (a then b) from stack, push (a<b) to stack as a 1 or 0
 ```
 
 ```
-A
+a
 and
 pop two values from stack, perform bitwise and, push result to stack
 ```
 
 ```
-X
+x
 xor
 pop two values from stack, perform bitwise xor, push result to stack
 ```
@@ -117,31 +111,32 @@ pop two values from stack, perform bitwise xor, push result to stack
 ## Maths
 
 ```
-a
+A
 add
 pop two values from stack, add them, push result to stack
 ```
 
 ```
-s
+S
 subtract
 pop two values (a then b) from stack, push (a-b) to stack
 ```
 
 ```
-m
+M
 multiply
 pop two values (a then b) from stack, push (a*b) to stack
 ```
 
 ```
-d
+D
 divide
 pop two values (a then b) from stack, push (a//b) to stack ( // = integer division)
 ```
 
 # Tips
 
+NOT A : `A XOR 1`
 A == B : `(A XOR B) == 0`  
 A != B : `( (A XOR B) == 0) XOR 1`  
 A OR B : `( (A XOR 1) AND (B XOR 1) ) XOR 1`

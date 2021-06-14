@@ -1,0 +1,75 @@
+# outputs hello world
+# purpose: demonstrates memory use
+
+# index, char0, char1, char2, ... char12
+0, 72, 101, 108, 108, 111, 44, 32, 119, 111, 114, 108, 100, 33
+
+# we will add one to index and then output MEM[index], 13 times.
+# loops are possible in piASM, just not used in this example for clarity - see the next example to see how loops work.
+
+
+
+# add 1 to index
+p0 g p1 A p0 s
+# output MEM[index] as a character
+p0 g g O
+
+# add 1 to index
+p0 g p1 A p0 s
+# output MEM[index] as a character
+p0 g g O
+
+# add 1 to index
+p0 g p1 A p0 s
+# output MEM[index] as a character
+p0 g g O
+
+# add 1 to index
+p0 g p1 A p0 s
+# output MEM[index] as a character
+p0 g g O
+
+# add 1 to index
+p0 g p1 A p0 s
+# output MEM[index] as a character
+p0 g g O
+
+# add 1 to index
+p0 g p1 A p0 s
+# output MEM[index] as a character
+p0 g g O
+
+# add 1 to index
+p0 g p1 A p0 s
+# output MEM[index] as a character
+p0 g g O
+
+# add 1 to index
+p0 g p1 A p0 s
+# output MEM[index] as a character
+p0 g g O
+
+# add 1 to index
+p0 g p1 A p0 s
+# output MEM[index] as a character
+p0 g g O
+
+# add 1 to index
+p0 g p1 A p0 s
+# output MEM[index] as a character
+p0 g g O
+
+# add 1 to index
+p0 g p1 A p0 s
+# output MEM[index] as a character
+p0 g g O
+
+# add 1 to index
+p0 g p1 A p0 s
+# output MEM[index] as a character
+p0 g g O
+
+# add 1 to index
+p0 g p1 A p0 s
+# output MEM[index] as a character
+p0 g g O
