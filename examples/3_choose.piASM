@@ -1,8 +1,14 @@
 # inputs two numbers a and b, and outputs a choose b.
-# purpose: demonstrates functions
+# purpose: demonstrate functions
 
 # funcindex, funcres, funcinp1, funcinp2, num1, num2, firstpartres, secondpartres
-0, 0, 0, 0, 0, 0, 0, 0
+MEM = [
+    # funcindex, funcres, funcinp1, funcinp2
+    0, 0, 0, 0,
+    # num1, num2, firstpartres, secondpartres
+    0, 0, 0, 0
+]
+
 # the first 4 are used by our function, which calculates funcinp1*(funcinp1 - 1)*(...)*(funcinp1 - funcinp2 + 1)
 # num1, num2 are the original user input nums
 # firstpartres is where num1*(num1 - 1)*(...)*(num1 - num2 + 1) is stored
@@ -12,12 +18,11 @@
 # then we jump to the function pointer, so the function is run, doing stuff with the function variables
 # then at the end of the function we jump back to the return pointer
 
+# store two inputs in num1, num2
+i i p5 s p4 s
+
 # push return pointer (so when function finished, will jump to P3)
 p3
-
-# store two inputs in num1, num2
-i p4 s
-i p5 s
 
 # initialize function arguments i.e. funcinp1 and funcinp2
 p4 g p2 s
@@ -33,29 +38,30 @@ P69
     P1
 
         # pseudocode for the loop:
-        #   if funcindex >= funcinp2:
+        #   funcindex += 1
+        #   if funcindex > funcinp2:
         #       break
         #   else:
-        #       funcres *= (funcinp1-funcindex)
-        #       funcindex += 1
+        #       funcres *= (funcinp1-funcindex+1)
         #       go back to loop start
 
         # push pointer
         p2
 
-        # compute funcindex >= funcinp2, in other words (funcindex < funcinp2) XOR 1
-        p3 g p0 g l p1 x
+        # funcindex += 1
+        p0 g p1 A p0 s
+
+        # compute funcindex > funcinp2
+        p0 g p3 g l
 
         # if it equals 1, break
         j
 
         # otherwise
-        # funcres = (funcinp1 - funcindex) * funcres
-        p0 g p2 g S
+        # funcres = (funcinp1 - funcindex + 1) * funcres
+        p0 g p2 g S p1 A
         p1 g M
         p1 s
-        # funcindex += 1
-        p0 g p1 A p0 s
         # jump to loop start
         p1 p1 j
 
@@ -72,7 +78,7 @@ P3
 p1 g p6 s
 
 # second function call
-#f(a, b) = a*(a-1)*(...)*(a-b+1) so to calculate num2! we call f(num2,num2)
+# f(a, b) = a*(a-1)*(...)*(a-b+1) so to calculate num2! we call f(num2,num2)
 # initialize arguments
 p5 g p2 s
 p5 g p3 s

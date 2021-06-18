@@ -2,14 +2,14 @@
 Why? Because boredom.
 
 ## Description
-piASM works with a stack and a memory buffer (refered to as MEM), which are both arraylists that instructions can modify. Both contain only integers - strings/chars are converted to their ascii codes, and decimals are not supported.
+piASM works with a stack and a memory buffer (refered to as MEM), which are both lists that instructions can modify. Both contain only integers - strings/chars are converted to their ascii codes, and decimals are not supported.
 
 Instructions can pop from / push to the top of the stack, and can read from / write to MEM.
 
-The first line of a piASM file specifies the initial memory buffer contents as a list of comma-separated values.
+The first part of a piASM file specifies the initial memory buffer contents in the format `MEM=[...]`
 All other lines contain instructions, which are run sequentially from left to right. Instructions are single characters, and integer arguments are given by appending `<argument>` after the instruction letter (see the Instructions section and examples for more details). Once the end of the instruction list is reached, the program terminates.
 
-Whitespace is not part of syntax and a hashtag anywhere in a line marks the whole line as a comment.
+Whitespace is not part of syntax and a hashtag anywhere in a line marks the rest of the line as a comment.
 
 # piASM Instructions
 
@@ -113,7 +113,7 @@ pop two values from stack, perform bitwise xor, push result to stack
 ```
 A
 add
-pop two values from stack, add them, push result to stack
+pop two values (a then b) from stack, push (a+b) to stack
 ```
 
 ```

@@ -1,8 +1,8 @@
 # inputs two numbers a and b, and outputs a to the power of b (b must be nonnegative).
-# purpose: demonstrates loops
+# purpose: demonstrate loops
 
 # num1, num2, index, result
-0, 0, 0, 1
+MEM = [0, 0, 0, 1]
 
 # input two numbers
 i i

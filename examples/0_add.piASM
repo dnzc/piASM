@@ -1,8 +1,8 @@
 # inputs two numbers a and b, and outputs a+b.
-# purpose: demonstrates basic syntax
+# purpose: demonstrate basic syntax
 
 # memory is irrelevant for this program
-0
+MEM=[]
 
 # input two numbers, which are pushed to the stack
 i i

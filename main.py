@@ -9,7 +9,10 @@ def run(program, memory_string):
 		if ins[0] == 'P':
 			pointers[int(ins[1:])] = i
 
-	MEM = [int(i) for i in memory_string.split(',')]
+	MEM = []
+	for i in memory_string.split(','):
+		if i != '':
+			MEM.append(int(i))
 	
 	curins = 0
 	while curins < len(program):
@@ -91,7 +94,13 @@ import re
 
 ##### get file to run
 
-filenames = ['examples/0_add', 'examples/1_helloworld', 'examples/2_exponentiation', 'examples/3_choose']
+filenames = [
+	'examples/0_add',
+	'examples/1_helloworld',
+	'examples/2_exponentiation',
+	'examples/3_choose',
+	'examples/4_mazegame',
+]
 
 print('Input a number to choose which file to run:')
 for i,val in enumerate(filenames):
@@ -102,14 +111,16 @@ filename = filenames[int(input())]
 
 raw = open(filename + '.piASM', 'r').read().split('\n')
 # remove comments + blank lines
-parsed = [i for i in raw if '#' not in i and i != '']
-# extract memory string
-memory_string = parsed.pop(0)
+parsed = [i.split('#')[0] for i in raw]
+parsed = [i for i in parsed if i != '']
 # remove whitespace
 parsed = re.sub('\s+', '', ''.join(parsed))
+# extract memory string
+parsed = parsed.split(']')
+memory_string = parsed[0][5:]
 # separate instructions
-program = re.findall(r'[a-zA-Z]\d*', parsed)
-print("Loaded program:", parsed)
+program = re.findall(r'[a-zA-Z][-\d]*', parsed[1])
+print("Loaded program:", parsed[1])
 
 ##### run
 
