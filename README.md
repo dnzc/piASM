@@ -57,27 +57,33 @@ pop two values (a then b) from stack, set MEM[a] to b
 ```
 i
 input
-push stdin to stack as an int
+get input, push to stack as an int
 ```
 
 ```
 o
 output
-pop a value from stack, send to stdout as an int
+pop a value from stack, then output (as an int, no newlines)
 ```
 
 ```
 I
 string input
-for each char in stdin: convert to ascii code, then push to stack. Finally, push the length of the input to stack
+
+get input (one char), convert to ascii code, then push to stack
 ```
 
 ```
 O
 string output
-pop a value from stack, convert from ascii code, send to stdout as a character
+pop a value from stack, convert from ascii code, then output (as a character, no newlines)
 ```
 
+```
+R
+long stRing input
+for each char in input excluding newlines: convert to ascii code, then push to stack. Finally, push the length of the input to stack
+```
 
 
 ## Logic

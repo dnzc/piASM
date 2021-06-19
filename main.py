@@ -6,12 +6,12 @@ def run(program, memory_string):
 	# find pointers
 	pointers = {}
 	for i,ins in enumerate(program):
-		if ins[0] == 'P':
+		if ins[0] == "P":
 			pointers[int(ins[1:])] = i
 
 	MEM = []
-	for i in memory_string.split(','):
-		if i != '':
+	for i in memory_string.split(","):
+		if i != "":
 			MEM.append(int(i))
 	
 	curins = 0
@@ -20,73 +20,76 @@ def run(program, memory_string):
 		ins = program[curins]
 		char = ins[0]
 		# general
-		if char == 'P':
+		if char == "P":
 			pass
-		elif char == 'j':
+		elif char == "j":
 			a = stack.pop(0)
 			b = stack.pop(0)
 			if a == 1:
 				curins = pointers[b]
-		elif char == 'p':
+		elif char == "p":
 			stack.insert(0, int(ins[1:]))
-		elif char == 'g':
+		elif char == "g":
 			val = stack.pop(0)
 			stack.insert(0, MEM[val])
-		elif char == 's':
+		elif char == "s":
 			val = stack.pop(0)
 			MEM[val] = stack.pop(0)
 		# I/O
-		elif char == 'i':
+		elif char == "i":
 			stack.insert(0, int(input()))
-		elif char == 'o':
-			print(stack.pop(0), end=' ')
-		elif char == 'I':
-			inp = input()
+		elif char == "o":
+			print(stack.pop(0), end="")
+		elif char == "I":
+			inp = input()[0]
+			stack.insert(0, ord(inp))
+		elif char == "O":
+			print(chr(stack.pop(0)), end="")
+		elif char == "R":
+			inp = input().replace("\n", "")
 			for i in inp:
 				stack.insert(0, ord(i))
 			stack.insert(0, len(inp))
-		elif char == 'O':
-			print(chr(stack.pop(0)), end='')
 		# logic
-		elif char == 'e':
+		elif char == "e":
 			a = stack.pop(0)
 			stack.insert(0, int(a==0))
-		elif char == 'l':
+		elif char == "l":
 			a = stack.pop(0)
 			b = stack.pop(0)
 			stack.insert(0, a<b)
-		elif char == 'a':
+		elif char == "a":
 			a = stack.pop(0)
 			b = stack.pop(0)
 			stack.insert(0, a&b)
-		elif char == 'x':
+		elif char == "x":
 			a = stack.pop(0)
 			b = stack.pop(0)
 			stack.insert(0, a^b)
 		# maths
-		elif char == 'A':
+		elif char == "A":
 			a = stack.pop(0)
 			b = stack.pop(0)
 			stack.insert(0, a+b)
-		elif char == 'S':
+		elif char == "S":
 			a = stack.pop(0)
 			b = stack.pop(0)
 			stack.insert(0, a-b)
-		elif char == 'M':
+		elif char == "M":
 			a = stack.pop(0)
 			b = stack.pop(0)
 			stack.insert(0, a*b)
-		elif char == 'D':
+		elif char == "D":
 			a = stack.pop(0)
 			b = stack.pop(0)
 			stack.insert(0, a//b)
 		else:
-			print(f'invalid syntax at instruction {curins}: {ins}')
+			print(f"unrecognized instruction around #{curins}: {ins}")
 			return
 
 		curins += 1
 	
-	print('\nProgram executed successfully')
+	print("\nProgram executed successfully")
 
 #################################
 
@@ -95,34 +98,34 @@ import re
 ##### get file to run
 
 filenames = [
-	'examples/0_add',
-	'examples/1_helloworld',
-	'examples/2_exponentiation',
-	'examples/3_choose',
-	'examples/4_mazegame',
+	"examples/0_add",
+	"examples/1_helloworld",
+	"examples/2_exponentiation",
+	"examples/3_choose",
+	"examples/4_mazegame",
 ]
 
-print('Input a number to choose which file to run:')
+print("Input a number to choose which file to run:")
 for i,val in enumerate(filenames):
-	print(f'    {i}) {val}')
+	print(f"    {i}) {val}")
 filename = filenames[int(input())]
 
 ##### parse file
 
-raw = open(filename + '.piASM', 'r').read().split('\n')
+raw = open(filename + ".piASM", "r").read().split("\n")
 # remove comments + blank lines
-parsed = [i.split('#')[0] for i in raw]
-parsed = [i for i in parsed if i != '']
+parsed = [i.split("#")[0] for i in raw]
+parsed = [i for i in parsed if i != ""]
 # remove whitespace
-parsed = re.sub('\s+', '', ''.join(parsed))
+parsed = re.sub("\s+", "", "".join(parsed))
 # extract memory string
-parsed = parsed.split(']')
+parsed = parsed.split("]")
 memory_string = parsed[0][5:]
 # separate instructions
-program = re.findall(r'[a-zA-Z][-\d]*', parsed[1])
+program = re.findall(r"[a-zA-Z][-\d]*", parsed[1])
 print("Loaded program:", parsed[1])
 
 ##### run
 
-print(f'Starting execution of {filename}')
+print(f"Starting execution of {filename}")
 run(program, memory_string)

@@ -1,48 +1,188 @@
 # a maze game.
 # purpose: show something text-based-ish.
 
-# USED MARKERS: 1, 2, 3, 4, 5, 6
+# USED POINTERS: 0, 1, ... , 32
 
 MEM = [
-    # first 40: x, y, <space>
-    0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-    # next 10: space for print function (stringlength, startindex, curindex)
+    # first 5: xpos), ypos, userinp, <padding>
+    0,0,0,0,0,
+    # next 5: isInvulnerable, playerchar, <padding>
+    0,0,0,0,0,
+    # next 10: <padding>
     0,0,0,0,0,0,0,0,0,0,
-    # next 1092: maze chars (xored with a key for obsfucation)
-    69,72,91,72,95,74,66,67,67,76,74,68,91,72,84,66,88,88,93,67,72,91,72,95,74,66,67,67,76,74,68,91,72,84,66,88,88,93,67,72,93,72,95,74,66,67,67,76,74,68,93,111,5,79,85,85,80,78,69,86,69,82,71,79,78,78,65,71,73,86,69,89,79,85,85,80,78,69,86,69,82,71,79,78,78,65,71,73,86,69,89,79,9,85,80,78,69,86,69,82,71,79,18,100,29,71,73,86,69,82,66,88,88,93,67,72,91,72,95,74,66,67,67,76,74,68,91,72,84,66,88,88,93,67,72,91,72,95,74,68,78,78,65,71,21,86,69,89,79,94,85,80,78,69,10,111,14,71,79,78,78,29,71,73,86,69,89,79,85,85,80,78,69,86,69,82,71,79,78,78,65,71,73,86,69,89,79,85,85,80,78,25,86,69,82,71,19,78,78,65,71,21,86,69,89,79,9,127,12,78,69,86,69,14,71,79,78,78,74,74,68,91,72,84,66,88,88,93,67,72,91,72,95,74,66,67,67,76,76,73,86,69,89,19,85,85,80,78,25,86,69,82,71,19,78,78,65,71,21,124,25,89,79,85,85,12,78,69,86,69,14,71,79,78,78,65,71,73,86,69,89,79,85,85,80,78,69,86,69,82,27,79,78,78,65,27,73,86,69,89,19,85,85,80,78,25,86,69,82,71,19,100,18,65,71,73,86,25,89,79,85,85,91,67,72,91,72,89,71,79,78,78,74,74,68,91,72,82,79,85,85,80,18,69,86,69,82,27,79,78,78,65,27,73,86,69,89,19,85,85,80,78,25,124,25,82,71,79,78,18,65,71,73,86,69,89,79,85,85,80,78,69,86,69,14,71,55,78,78,65,71,73,86,69,5,79,85,85,80,18,69,86,69,82,27,79,78,78,65,27,73,86,69,89,19,127,9,80,78,69,86,25,82,71,79,78,69,76,74,68,91,72,84,66,88,88,91,67,72,91,72,95,74,66,67,67,74,71,73,86,69,5,79,85,85,80,69,72,91,72,95,76,79,78,78,65,27,99,10,69,89,79,85,9,80,78,69,86,25,82,71,79,78,78,65,71,73,86,69,89,79,85,85,80,78,69,86,69,14,71,79,78,78,29,71,73,86,69,89,79,85,85,80,78,69,86,69,82,27,101,18,78,65,71,73,93,72,84,66,88,94,80,78,69,86,78,95,74,66,67,67,76,74,68,91,78,89,79,85,85,12,78,69,86,69,89,74,66,67,67,76,74,68,91,72,82,79,85,85,80,18,111,10,69,82,71,79,78,78,65,71,73,10,69,89,79,85,9,80,78,69,86,69,82,71,79,78,18,65,71,73,86,25,89,79,85,85,80,78,69,86,69,82,71,79,78,78,29,71,73,86,69,5,101,9,85,80,78,69,93,69,82,71,79,18,78,65,71,73,10,69,89,79,85,94,80,78,69,86,25,82,71,79,78,18,65,71,73,86,78,84,66,88,88,93,67,72,91,72,89,71,79,78,78,29,109,21,86,69,89,79,9,85,80,78,69,10,69,82,71,79,18,78,65,71,73,10,69,89,79,85,9,80,78,69,86,25,82,71,79,78,78,65,71,73,86,69,89,79,85,85,80,78,69,86,69,14,109,68,67,67,76,74,66,86,69,89,79,9,85,80,78,69,10,69,82,71,79,18,78,65,71,73,10,69,89,79,85,9,80,78,69,86,78,95,74,66,67,67,76,74,68,91,72,84,66,88,88,91,100,25,86,69,82,71,79,78,78,65,71,21,86,69,89,79,9,85,80,78,69,10,69,82,71,79,18,78,65,71,73,10,69,89,79,85,9,80,78,69,86,69,82,71,79,78,78,65,71,73,86,25,115,19,85,85,80,78,78,86,69,82,71,19,78,78,65,71,66,91,72,84,66,94,85,80,78,69,10,69,82,71,79,18,78,65,71,73,10,69,89,79,85,94,93,67,72,91,78,82,71,79,78,18,107,27,73,86,69,89,19,85,85,80,78,25,86,69,82,71,79,78,78,65,71,73,86,69,89,79,9,85,80,78,69,10,69,82,71,79,18,78,65,71,73,86,69,89,79,85,9,80,78,69,86,25,120,27,79,78,78,65,76,68,91,72,84,68,88,88,93,67,72,91,72,95,74,68,78,78,65,71,21,86,69,89,79,9,85,80,78,69,93,72,95,74,66,67,67,76,74,68,93,69,89,79,85,9,122,18,69,86,69,82,71,79,78,78,65,71,73,86,69,89,79,85,85,80,78,69,86,69,82,71,19,78,78,65,71,21,86,69,89,79,85,85,80,78,69,86,69,82,71,79,78,78,65,71,73,10,111,82,66,88,88,93,67,72,91,72,95,74,66,67,67,76,74,68,91,72,84,66,88,88,93,67,78,86,69,82,71,68,67,67,76,74,68,91,72,84,66,88,88,93,67,72,91,72,95,74,66,69,100,
-    # next 8: padding
-    0,0,0,0,0,0,0,0,
-    # next 19: maze xor key "nevergonnagiveyouup"
+    # next 10: space for handlespecial function (x, y, <padding>)
+    0,0,0,0,0,0,0,0,0,0,
+    # next 10: space for move function (dx, dy, nextchar, nextxorchar, retval, <padding>)
+    0,0,0,0,0,0,0,0,0,0,
+    # next 10: space for print function (strlen, startind, curind, <padding>)
+    0,0,0,0,0,0,0,0,0,0,
+    # next 288: maze chars (xored with a key for obsfucation)
+    69,72,91,72,95,74,66,67,67,76,76,68,91,72,84,66,88,88,93,67,72,91,72,95,74,66,67,67,76,74,66,124,25,45,79,43,85,80,78,59,86,69,14,57,79,78,78,65,71,73,86,69,89,79,85,85,80,78,69,86,69,34,27,101,69,48,63,71,73,40,69,89,49,43,94,80,78,59,86,78,82,71,79,48,69,76,74,68,91,78,89,79,85,85,12,100,25,86,69,82,57,79,48,78,65,71,73,86,59,89,79,9,43,80,78,69,86,69,44,71,63,18,78,65,71,73,10,111,82,66,88,88,93,69,72,91,72,95,74,66,67,67,76,76,68,91,72,84,68,85,85,46,78,25,86,69,82,71,19,100,18,53,57,73,86,69,89,79,85,85,80,78,69,86,69,82,71,79,62,78,29,71,73,86,69,5,49,43,43,46,18,111,10,69,82,71,79,69,67,76,74,68,93,69,89,49,85,94,93,67,72,91,78,82,57,79,78,18,63,57,55,40,25,115,19,85,43,80,78,69,86,69,42,71,19,48,78,65,71,73,86,69,89,79,85,85,80,78,49,10,59,44,57,49,18,100,74,74,68,91,72,84,66,88,88,93,69,72,91,72,95,74,66,67,67,76,74,68,91,72,84,68,86,86,83,77,25,124,
+    # next 2: padding
+    0,0,
+    # next 19: xor key "nevergonnagiveyouup"
     110,101,118,101,114,103,111,110,110,97,103,105,118,101,121,111,117,117,112,
-    # next 11: padding
-    0,0,0,0,0,0,0,0,0,0,0,
+    # next 1: padding
+    0,
+    # next 79: prompt chars ("escape the maze! input...")
+    43,22,21,4,2,2,79,26,6,4,71,4,23,31,28,78,85,60,30,30,16,2,69,5,72,14,65,29,78,3,73,16,10,11,79,20,85,20,7,23,19,6,6,14,0,0,66,65,12,73,16,10,11,79,20,85,29,15,21,86,14,23,30,67,78,1,19,71,56,86,17,22,79,4,0,25,26,95,86,
+    # next: padding
+    0,
+    # next 352: map key chars ("KEY: X'=you...")
+    100,46,51,60,72,109,76,77,77,66,68,74,85,70,90,76,86,86,83,77,70,85,70,81,68,76,77,77,66,68,74,85,70,90,76,86,86,83,77,70,85,70,81,68,76,77,77,66,68,74,85,111,32,0,0,85,77,78,66,46,66,120,52,31,15,13,4,71,84,86,66,89,72,85,93,17,2,9,25,18,23,3,79,26,1,65,10,6,0,0,89,7,16,7,21,71,111,33,4,30,11,79,83,78,0,9,16,86,10,31,79,82,88,12,69,66,86,77,1,19,0,30,29,65,10,6,0,0,20,10,27,1,89,100,32,14,12,6,71,82,78,73,66,64,73,94,2,22,14,25,85,25,29,69,2,10,82,0,10,26,78,9,2,27,19,76,115,60,5,28,27,11,69,75,69,85,57,72,78,70,8,1,73,15,10,12,79,24,26,6,11,69,25,11,6,8,79,1,0,4,75,73,31,11,10,27,20,27,4,78,1,19,4,6,15,70,100,58,19,2,8,5,16,11,10,85,72,80,73,49,81,69,90,10,0,24,11,65,8,7,2,10,89,6,1,85,4,1,69,2,4,25,2,79,7,26,72,109,57,19,23,10,0,27,85,77,78,66,38,66,82,79,2,1,24,4,71,6,24,17,22,79,1,29,21,3,69,2,10,82,20,31,11,15,10,71,29,25,69,13,7,16,24,89,100,70,85,70,81,68,76,77,77,66,68,74,85,70,90,76,86,86,83,77,70,85,70,81,68,76,77,77,66,68,74,85,70,90,76,86,86,83,77,70,85,70,81,68,76,77,100,107,
     
 ]
 
-p1 p1 j # don't execute function section yet
+p1 p1 j # don't execute function section straight away
 
 # function declaration section
 
     P2 # begin print function
-        p0 p42 s # set curindex to 0
-        P5 # loop curindex from 0 to stringlength
-            p41 g p42 g A g # get MEM[startindex + curindex]
-            p19 p42 g D p19 M p42 g S p1150 A g # calculate MEM[1150 + curindex%19]
+        p0 p42 s # set curind to 0
+        P5 # loop curind from 0 to strlen
+            p41 g p42 g A g # get MEM[startind + curind]
+            p19 p42 g D p19 M p42 g S p340 A g # calculate MEM[340 + curind%19]
             x O # xor then print
-            p42 g p1 A p42 s # curindex += 1
-            p6 p40 g p42 g l p1 x j # if curindex >= stringlength: break
+            p42 g p1 A p42 s # curind += 1
+            p6 p40 g p42 g l p1 x j # if curind >= strlen: break
             p5 p1 j # else repeat
         P6 # end loop
         p1 j # return
-    P3 # end print function
+    # end print function
+
+    P18 # begin move function
+        # calculate new xor char
+            p19 p1 g p31 g A p32 M p0 g A p30 g A D p19 M # ((y+dy)*width+x+dx) //19 * 19
+            p1 g p31 g A p32 M p0 g A p30 g A # (y+dy)*width+dx (subtract prev line to get modulo)
+            S p340 A g p33 s # store xor char in nextxorchar
+        # store char at new pos in nextchar i.e. MEM[startindex + (y+dy)*width + x+dx]
+            p1 g p31 g A p32 M p0 g A p30 g A p50 A g p33 g x p32 s # xor, write actual char to nextchar
+        # if trying to move to space or treasure, set char at pos to empty, ypos -= 1, set char at pos to XX
+            p17 p32 g p32 x p1 x j # if (char XOR " ") XOR 1, move
+            p17 p32 g p84 x p1 x j # if (char XOR "T") XOR 1, move
+            p16 p1 j # else don't move
+        P17 # conditional move
+            # set char at pos from X to empty
+                # calculate new char with xor
+                p19 p1 g p32 M p0 g A D p19 M p1 g p32 M p0 g A S p340 A g p32 x
+                p1 g p32 M p0 g A p50 A # calculate pos (startindex + y*width + x)
+                s # finally, write char
+            p0 g p30 g A p0 s p1 g p31 g A p1 s # xpos += dx, ypos += dy
+            # set char at pos from empty to X
+                p33 g p88 x # calculate new char with xor
+                p1 g p32 M p0 g A p50 A s # same as X -> empty
+        P16 # jump here if not moving
+        p0 p34 s # retval = 0
+
+        # if nextchar is spike, die
+        p27 p32 g p94 x p1 x j
+        p28 p1 j # else go to P28
+        P27 # begin if
+            # print "you died"
+            p10Op79Op111Op112Op115Op44Op32Op108Op111Op111Op107Op115Op32Op108Op105Op107Op101Op32Op121Op111Op117Op32Op103Op111Op116Op32Op105Op109Op112Op97Op108Op101Op100Op46Op32Op66Op101Op116Op116Op101Op114Op32Op108Op117Op99Op107Op32Op110Op101Op120Op116Op32Op116Op105Op109Op101Op46Op10Op10O
+            p13 p1 j # stop
+        P28 # endif
+
+        # (el)if nextchar is exit, return 1
+        p29 p32 g p35 x p1 x j
+        p30 p1 j # else go to P30
+        P29 # begin if
+            p1 p34 s #  retval = 1
+            p1 j # return
+        P30 # endif
+
+        # (el)if nextchar is treasure/person, call handlespecial(targetpos)
+        p3 p32 g p84 x p1 x j # check if == T
+        p3 p32 g p80 x p1 x j # check if == P
+        p19 p1 j # else go to P19
+        P3 # begin if
+            # set handlespecial params (x, y)
+            p0 g p30 g A p20 s p1 g p31 g A p21 s
+            p32 p31 p1 j P32 # handlespecial()
+        P19 # endif
+
+        p1 j # return
+    # end move function
+
+    P31 # begin handlespecial function (deals with treasure + people )
+
+        # TODO: implement the below (sorted in order of effort... almost done!!!!)
+
+        # (24, 3) : "(rhyme) the second part of the pw is X"
+        # (18, 5) : "you have a long road ahead of you, i'll give you the first part of the pw as a present"
+        # (1, 1) : cyber puzzle (end is encrypted zip with secret num)
+        # (1, 5) : invulnerability (works once)
+        # (24, 7) : change player char (kinda irrelevant, just filler)
+        # (29, 1) : "road ahead looks blocked. if you give me a secret number though, i can blow up all the spikes for you"
+        p1 j # return
+    # end handlespecial function
 
 P1 # end function declaration section
 
 
+# init vars
+p8 p0 s p7 p1 s # (xpos, ypos) = (8, 7)
+p0 p5 s # isInvulnerable = 0 (false)
+p88 p6 s # playerchar = X
 
-# print board
 
-p1092 p40 s # set stringlength to 1092
-p50 p41 s # set startindex to 50
+P0 # begin game loop
 
-p4 p2 p1 j P4 # call print function
+    # print board
+    p10 O p288 p40 s p50 p41 s p4 p2 p1 j P4 # strlen=288, startind=50
+    P12 # loop back here to not print board
+    # print prompt
+    p79 p40 s p360 p41 s p8 p2 p1 j P8 # strlen=79, startind=360
+
+    I p2 s # get input char
+
+    # if input == k, print key
+    p9 p2 g p107 x p1 x j # if input==k, jump to P9
+    p14 p2 g p81 x p1 x j # if input==Q, jump to P14
+    p15 p2 g p119 x p1 x j # if input==w, jump to P15
+    p21 p2 g p97 x p1 x j # if input==a, jump to P21
+    p23 p2 g p115 x p1 x j # if input==s, jump to P23
+    p25 p2 g p100 x p1 x j # if input==d, jump to P25
+    p10 p1 j # otherwise jump to else section
+    P9 # if input == k section
+        # print key
+        p352 p40 s p650 p41 s p11 p2 p1 j P11 # strlen=352, startind=650
+        p12 p1 j # go to P12
+    P14 # if input == Q section
+        # print "thanks for playing"
+        p10Op84Op104Op97Op110Op107Op115Op32Op102Op111Op114Op32Op112Op108Op97Op121Op105Op110Op103Op46Op32Op72Op111Op112Op101Op32Op105Op116Op32Op119Op97Op115Op32Op102Op117Op110Op33Op10O
+        p13 p1 j # stop
+    P15 # if input == w section
+        p0 p30 s p-1 p31 s # dx = 0, dy = -1
+        p20 p18 p1 j P20 # move()
+        p7 p34 g j # if retval is 1, stop the main game loop (win)
+        p0 p1 j # go to loop start
+    P21 # if input == a section
+        p-1 p30 s p0 p31 s # dx = -1, dy = 0
+        p22 p18 p1 j P22 # move()
+        p7 p34 g j # if retval is 1, stop the main game loop (win)
+        p0 p1 j # go to loop start
+    P23 # if input == s section
+        p0 p30 s p1 p31 s # dx = 0, dy = 1
+        p24 p18 p1 j P24 # move()
+        p7 p34 g j # if retval is 1, stop the main game loop (win)
+        p0 p1 j # go to loop start
+    P25 # if input == d section
+        p1 p30 s p0 p31 s # dx = 1, dy = 0
+        p26 p18 p1 j P26 # move()
+        p7 p34 g j # if retval is 1, stop the main game loop (win)
+        p0 p1 j # go to loop start
+    P10 # else section
+        # print "invalid input"
+        p73Op110Op118Op97Op108Op105Op100Op32Op105Op110Op112Op117Op116Op44Op32Op112Op108Op101Op97Op115Op101Op32Op116Op114Op121Op32Op97Op103Op97Op105Op110Op46Op10O
+        p12 p1 j # go to P12
+
+
+    p0 p1 j
+
+P7 # end game loop
+
+# TEMPORARY: print "you win"
+p89Op111Op117Op32Op119Op105Op110Op33O
+
+P13 # stop
