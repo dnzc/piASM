@@ -1,5 +1,5 @@
 # a maze game.
-# purpose: show something text-based-ish.
+# purpose: show some of the possibilities of piASM.
 
 # USED POINTERS: 0, 1, ... , 84
 
@@ -375,4 +375,3 @@ p228p40s p2584p41s p352p43s p24p44s # set params: (228, 2584, <>, 352, 24)
 p84 p2 p1 j P84 # call print()
 
 P13 # stop
-p13 # useless, just gives above pointer a reference instruction

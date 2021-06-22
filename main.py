@@ -129,10 +129,10 @@ parsed = re.sub("\s+", "", "".join(parsed))
 # extract memory string
 parsed = parsed.split("]")
 memory_string = parsed[0][5:]
+print("Loaded memory:", parsed[0]+"]")
+print("Loaded program:", parsed[1])
 # separate instructions
 program = re.findall(r"[a-zA-Z][-\d]*", parsed[1])
-print("Loaded program:", parsed[1])
-print(parsed[0]+"]")
 
 ##### run
 
