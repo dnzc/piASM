@@ -37,11 +37,19 @@ def run(program, memory_string):
 			MEM[val] = stack.pop(0)
 		# I/O
 		elif char == "i":
-			stack.insert(0, int(input()))
+			while True:
+				try:
+					stack.insert(0, int(input()))
+					break
+				except:
+					print("input failed, try again")
 		elif char == "o":
 			print(stack.pop(0), end="")
 		elif char == "I":
-			inp = input()[0]
+			while True:
+				a=input()
+				if len(a)>0:break
+			inp = a[0]
 			stack.insert(0, ord(inp))
 		elif char == "O":
 			print(chr(stack.pop(0)), end="")
@@ -124,6 +132,7 @@ memory_string = parsed[0][5:]
 # separate instructions
 program = re.findall(r"[a-zA-Z][-\d]*", parsed[1])
 print("Loaded program:", parsed[1])
+print(parsed[0]+"]")
 
 ##### run
 

@@ -39,7 +39,7 @@ P69
 
         # pseudocode for the loop:
         #   funcindex += 1
-        #   if funcindex > funcinp2:
+        #   if funcindex == funcinp2 + 1:
         #       break
         #   else:
         #       funcres *= (funcinp1-funcindex+1)
@@ -48,11 +48,11 @@ P69
         # push pointer
         p2
 
-        # funcindex += 1
-        p0 g p1 A p0 s
+        # funcindex -= -1 (i.e. add 1)
+        p-1 p0 g S p0 s
 
-        # compute funcindex > funcinp2
-        p0 g p3 g l
+        # compute funcindex == funcinp2 + 1
+        p0 g p3 g p1 A x p1 x
 
         # if it equals 1, break
         j
