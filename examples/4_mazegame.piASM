@@ -218,8 +218,8 @@ p1 p1 j # don't execute function section straight away
                                     # loop through maze chars (i.e. index 50 to 338), turn ^ to " "
                                         p50 p3 s # temploopvar = 50
                                         P63 # start loop
-                                            # temploopstore = xorchar = MEM[340+(temploopvar-50)%14]
-                                            p14 p50 p3 g S D p14 M p50 p3 g S S p340 A g p4 s
+                                            # temploopstore = xorchar = MEM[367+(temploopvar-50)%10]
+                                            p10 p50 p3 g S D p10 M p50 p3 g S S p367 A g p4 s
                                             p65 p4 g p3 g g x p94 x p1 x j # if char == ^
                                             p66 p1 j # else go to endif
                                             P65 # begin if
