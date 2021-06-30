@@ -1,0 +1,44 @@
+# inputs a number n, outputs 1 + 2 + 3 + ... + n
+# purpose: demonstrates loops again
+# contributed by Luke M
+
+# Cur,upto, result
+MEM = [1,0,0,10]
+
+
+i # (1)nputs new value onto stack
+p1 A # (1)dds one to input
+
+
+
+p1 s # stores input at mem[1]
+
+
+
+P0 # Start of main loop
+
+
+    p100 # End location out of main loop
+    p0 g # Gets mem[0] onto stack
+    p1 g # gets mem[1] onto stack
+    S # Pushes mem[1]-mem[0] to stack
+
+    e j # Jump out of loop
+
+
+    p2 g # mem[2] onto stack
+    p0 g # mem[0] onto stack
+    A
+    p2 s #  mem[0]+mem[2] to mem[2]
+    p2 g #  mem[2] onto stack
+
+    o # output mem[2]
+    p3 g O # outputs mem[3] as ascii char
+
+    p0 g p1 A # Adds one to mem[0]
+    p0 s # Stores mem[0] with updated value
+
+    p0 p1 j #  back to start of loop
+
+
+P100 # Halt label

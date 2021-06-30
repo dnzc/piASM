@@ -1,0 +1,32 @@
+# inputs a number x, calculates and outputs x! using recursion.
+# purpose: demonstrate recursion
+
+MEM=[
+    # retval, param
+    0, 0
+]
+
+# get userinp, store in param
+ip1s
+
+p1 # push return pointer
+
+# begin func
+P0
+    # if param < 2, return 1
+        p2 p2 p1 g l j # if param<2, go to P2
+        p3 p1 j # else skip P2
+        P2
+            p1p0s p1 j # return 1
+        P3
+
+    # else return param * func(param-1)
+        p1 g # push param to stack
+        p1 p1 g S p1 s # param -= 1
+        p5 p0 p1 j P5 # call func(param-1)
+        # return retval * param
+        p0 g M p0 s p1 j
+
+P1
+
+p0 g o # output retval
