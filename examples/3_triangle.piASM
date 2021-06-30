@@ -1,9 +1,9 @@
 # inputs a number n, outputs 1 + 2 + 3 + ... + n
-# purpose: demonstrates loops again
+# purpose: demonstrate loops again
 # contributed by Luke M
 
 # Cur,upto, result
-MEM = [1,0,0,10]
+MEM = [1,0,0, 10]
 
 
 i # (1)nputs new value onto stack
