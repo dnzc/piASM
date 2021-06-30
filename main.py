@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # this file runs a .piASM program
 
 def run(program, memory_string):
@@ -109,8 +110,10 @@ filenames = [
 	"examples/0_add",
 	"examples/1_helloworld",
 	"examples/2_exponentiation",
-	"examples/3_choose",
-	"examples/4_mazegame",
+        "examples/3_triangle"
+	"examples/4_choose",
+        "examples/5_recursion",
+	"examples/6_mazegame",
 ]
 
 print("Input a number to choose which file to run:")
