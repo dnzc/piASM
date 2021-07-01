@@ -269,7 +269,7 @@ p1 p1 j # don't execute function section straight away
                 p1 p5 s # isInvincible = true
                 p52 p1 j # don't check other ifs
             P76 # endif
-        # (1, 1) : cyber puzzle (end is encrypted zip with secret num)
+        # (1, 1) : cyber puzzle (end is pastebin with secret num)
             p81 p21 g p69 M p20 g A p70 x p1 x j # if y*69+x == 70, jump to if
             p82 p1 j # else jump to endif
             P81 # begin if

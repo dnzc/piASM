@@ -143,6 +143,10 @@ pop two values (a then b) from stack, push (a//b) to stack ( // = integer divisi
 # Tips
 
 NOT A : `A XOR 1`
-A == B : `(A XOR B) == 0`  
-A != B : `( (A XOR B) == 0) XOR 1`  
+
+A == B : `(A XOR B) == 0`
+
+A != B : `( (A XOR B) == 0) XOR 1`
+
 A OR B : `( (A XOR 1) AND (B XOR 1) ) XOR 1`
+
