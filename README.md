@@ -1,5 +1,5 @@
 # piASM : Custom assembly-like language
-Why? Because boredom.
+Why? Because boredom. Takes inspiration from WebAssembly.
 
 ## Description
 piASM works with a stack and a memory buffer (refered to as MEM), which are both lists that instructions can modify. Both contain only integers - strings/chars are converted to their ascii codes, and decimals are not supported.
